@@ -32,6 +32,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main
           git add proxy.txt
           git commit -m "Update proxy list with ${{ steps.run-script.outputs.count }} proxies at $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin main
