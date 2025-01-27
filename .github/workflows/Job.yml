@@ -21,11 +21,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt 
       - name: Run proxy scraper script 
-        run: python scripts/Proxy.py 
+        id: run-script
+        run: |
+          OUTPUT=$(python scripts/Proxy.py)
+          echo "$OUTPUT"
+          COUNT=$(echo "$OUTPUT" | grep -oP '总共读取到 \K\d+')
+          echo "Extracted proxy count: $COUNT"
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
       - name: Commit and push changes 
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add proxy.txt
-          git commit -m "Update proxy list $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "Update proxy list with ${{ steps.run-script.outputs.count }} proxies at $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin main
