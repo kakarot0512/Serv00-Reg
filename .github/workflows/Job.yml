@@ -18,7 +18,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt 
       - name: Run proxy scraper script 
-        run: python scripts/proxy.py 
+        run: python scripts/Proxy.py 
       - name: Commit and push changes 
         run: |
           git config --global user.name "github-actions[bot]"
